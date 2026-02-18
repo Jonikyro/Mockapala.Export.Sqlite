@@ -49,7 +49,7 @@ public sealed class SqliteExporter : ISchemaDataExporter
             if (exportable.Count == 0)
                 continue;
 
-            string tableName = this._options.GetTableName(entityType);
+            string tableName = this._options.GetTableName(entityType, definition);
 
             if (this._options.CreateTables)
                 this.CreateTable(connection, tableName, exportable);
@@ -87,7 +87,7 @@ public sealed class SqliteExporter : ISchemaDataExporter
     private void CreateTable(SqliteConnection connection, string tableName, IReadOnlyList<ExportableProperty> properties)
     {
         string columns = string.Join(", ", properties.Select(p =>
-            $"{this._options.QuoteColumn(p.Property.Name)} {GetSqliteColumnType(p.EffectiveType)}"));
+            $"{this._options.QuoteColumn(p.ColumnName)} {GetSqliteColumnType(p.EffectiveType)}"));
 
         using SqliteCommand cmd = connection.CreateCommand();
         cmd.CommandText = $"CREATE TABLE IF NOT EXISTS {tableName} ({columns});";
@@ -96,7 +96,7 @@ public sealed class SqliteExporter : ISchemaDataExporter
 
     private void InsertRows(SqliteConnection connection, string tableName, IReadOnlyList<ExportableProperty> properties, IReadOnlyList<object> entities)
     {
-        string columnNames = string.Join(", ", properties.Select(p => this._options.QuoteColumn(p.Property.Name)));
+        string columnNames = string.Join(", ", properties.Select(p => this._options.QuoteColumn(p.ColumnName)));
         string paramNames = string.Join(", ", properties.Select((_, i) => $"$p{i}"));
 
         using SqliteCommand cmd = connection.CreateCommand();

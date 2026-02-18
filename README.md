@@ -68,6 +68,23 @@ var exporter = new SqliteExporter(new SqliteExportOptions
 | `QuoteIdentifiers` | `true` | Wraps table and column names in `"double quotes"`. |
 | `TableNameResolver` | Type name | `Func<Type, string>` that maps an entity type to its destination table name. |
 
+### Table and Column Names from Schema
+
+The exporter respects `ToTable` and `HasColumnName` metadata defined in the Mockapala schema:
+
+```csharp
+var schema = SchemaCreate.Create()
+    .Entity<Order>(e =>
+    {
+        e.Key(o => o.Id);
+        e.ToTable("orders");
+        e.Property(o => o.CustomerId).HasColumnName("customer_id");
+    })
+    .Build();
+```
+
+Priority: `TableNameResolver` (exporter option) > `ToTable` (schema) > type name.
+
 ## Property Conversions
 
 The exporter respects property conversions defined in the schema. This lets you store non-scalar types or transform values at export time:

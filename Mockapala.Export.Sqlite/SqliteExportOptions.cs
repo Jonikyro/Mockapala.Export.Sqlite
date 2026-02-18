@@ -1,3 +1,5 @@
+using Mockapala.Schema;
+
 namespace Mockapala.Export.SqlLite;
 
 /// <summary>
@@ -25,9 +27,11 @@ public sealed class SqliteExportOptions
     /// </summary>
     public bool UseWalMode { get; set; } = true;
 
-    internal string GetTableName(Type entityType)
+    internal string GetTableName(Type entityType, IEntityDefinition? definition = null)
     {
-        string name = this.TableNameResolver != null ? this.TableNameResolver(entityType) : entityType.Name;
+        string name = this.TableNameResolver != null
+            ? this.TableNameResolver(entityType)
+            : definition?.TableName ?? entityType.Name;
         return this.QuoteIdentifiers ? $"\"{name}\"" : name;
     }
 
