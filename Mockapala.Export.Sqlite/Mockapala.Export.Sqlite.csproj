@@ -22,7 +22,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.2" />
-		<PackageReference Include="Mockapala" Version="0.1.0-alpha.1" />
+		<PackageReference Include="Mockapala" Version="0.1.0-alpha.2" />
 	</ItemGroup>
 
 	<ItemGroup>
