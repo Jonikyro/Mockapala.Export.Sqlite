@@ -1,0 +1,14 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Solution files/">
+    <File Path=".github/workflows/publish.yml" />
+    <File Path=".gitignore" />
+    <File Path="README.md" />
+  </Folder>
+  <Project Path="Mockapala.Export.Sqlite.Tests/Mockapala.Export.Sqlite.Tests.csproj" />
+  <Project Path="Mockapala.Export.Sqlite/Mockapala.Export.Sqlite.csproj" />
+</Solution>
